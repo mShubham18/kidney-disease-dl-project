@@ -1,0 +1,8 @@
+.venv
+.venv/
+venv/
+venv
+artifacts/*
+.dvcignore
+#dvc.lock
+mlruns/*

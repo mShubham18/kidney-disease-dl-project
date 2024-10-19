@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Kidney Disease Classification</title>
+    <link rel="shortcut icon" href="" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #f9efef;
+            font-size: 16px;
+            margin: 0;
+            padding: 0;
+        }
+        .iupload h3 {
+            color: #000;
+            font-size: 30px;
+            font-weight: 700;
+			margin-bottom: 50px;
+        }
+        .img-part, .res-part, .res-part2 {
+            /*border: 1px solid #dedede;*/
+            margin: 10px 0;
+            border-radius: 5px;
+            overflow: hidden;
+            background-color: #fff;
+        }
+        .img-part {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .image-part {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            border: 1px solid #1b2d6b;
+            margin: 10px 0;
+        }
+        .image-part img,
+        #video {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .jsonRes {
+            margin: 30px;
+        }
+        #send {
+            cursor: pointer;
+        }
+        .btn {
+            padding: 10px 20px;
+            background-color: #cd0b4c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 15px;
+            margin: 10px;
+        }
+        .btn:hover {
+            background-color: #a80038;
+        }
+        .hero {
+            background-color: #fde1e1;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px auto;
+			margin-bottom: 100px;
+            width: 68%;
+            max-width: 1200px;
+            text-align: center;
+        }
+        footer {
+    		background-color: #cd0b4c;
+			color: white;
+			text-align: center;
+			padding: 10px;
+			position: fixed;
+			bottom: 0;
+			left: 0;
+			width: 100%;
+		}
+        .row-equal {
+            display: flex;
+        }
+        .col-equal {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        @media (max-width: 768px) {
+            .btn {
+                width: 100%;
+            }
+        }
+        @media (max-width: 480px) {
+            body {
+                font-size: 14px;
+            }
+        }
+		.result-box {
+			padding: 10px;
+			border-radius: 5px;
+			margin-top: 10px;
+		}
+
+		.result-normal {
+			background-color: #d4edda; /* Light green */
+			color: #155724; /* Dark green text */
+			padding: 10px;
+			text-align: center;
+		}
+
+		.result-tumor {
+			background-color: #f8d7da; /* Light red */
+			color: #721c24; /* Dark red text */
+			padding: 10px;
+			text-align: center;
+		}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <section class="iupload">
+            <h3 class="text-center py-4">Kidney Disease Classification</h3>
+            <div class="row row-equal">
+                <div class="img-part col-md-6 col-equal">
+                    <div class="image-part">
+                        <video autoplay id="video" poster="https://img.freepik.com/free-vector/group-young-people-posing-photo_52683-18824.jpg?size=338&ext=jpg"></video>
+                        <img src="" id="photo" style="display: none;">
+                        <canvas id="canvas" style="display: none;"></canvas>
+                    </div>
+                    <div class="btn-part text-center">
+                        <form id="upload-data" class="pt-3">
+                            <div class="input-group mt-3">
+                                <button type="button" class="btn btn-primary" id="uload">Upload</button>
+                                <button id="send" type="button" class="btn btn-success">Predict</button>
+                            </div>
+                            <input type="hidden" class="form-control" id="url" value="../predict"/>
+                            <input name="upload" type="file" id="fileinput" style="display: none;"/>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-6 col-equal">
+                    <h5 class="text-center">Important :</h5>
+					<p>Kidney disease prediction using machine learning relies on advanced algorithms trained on a vast dataset of medical images. The system analyzes uploaded CT scans to identify patterns associated with healthy or abnormal kidney tissues, potentially detecting tumors or other conditions. The algorithm learns from previous cases and uses that knowledge to make predictions on new images.
+
+					<br><br>While this technology provides powerful insights, it's important to note that predictions might not always be 100% accurate. Variability in image quality, unique patient conditions, or limitations in the training data can influence the results.<br>Therefore, machine learning predictions should always be verified by medical professionals before starting any self treatment.
+					</p>
+                    <div class="res-part2 text-center"></div>
+					<h5 class="text-center">Prediction Results: </h5>
+                    <div class="res-part">
+                        <div class="jsonRes"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <header class="hero">
+        <h1>Want to learn more?</h1>
+        <p>Dive into the mechanisms powering this project.</p>
+        <a href="{{ url_for('home') }}" class="btn">Know More</a>
+    </header>
+    
+    <div id="loading" style="display:none;">
+        <div class="loader"></div>
+    </div>
+
+    <footer>
+        <p>Kidney Disease Classification Web App. <a href="https://github.com/mShubham18/Kidney-Disease-Classifier-DL" style="color: rgb(209, 196, 196);">Check out the repository</a></p>
+    </footer>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script>
+        var base_data = "";
+
+        function sendRequest(base64Data){
+            var url = $("#url").val();
+            $("#loading").show();
+            $.ajax({
+                url: url,
+                type: "post",
+                contentType: 'application/json',
+                data: JSON.stringify({image: base64Data}),
+                success: function (res) {
+                    // Ensure the response is a plain string and not wrapped in an object
+                    const predictionResult = typeof res === 'string' ? res : JSON.stringify(res); // Convert to string if necessary
+                    const resultBox = $(".jsonRes");
+
+                    // Update the result box with the prediction result
+                    resultBox.html("<pre>" + predictionResult + "</pre>");
+
+                    // Check the prediction result and change the color accordingly
+                    if (predictionResult === "Tumor") {
+                        resultBox.removeClass("result-normal").addClass("result-tumor");
+                    } else if (predictionResult === "Normal") {
+                        resultBox.removeClass("result-tumor").addClass("result-normal");
+                    }
+
+                    $("#loading").hide();
+                },
+                error: function() {
+                    alert("Error occurred while processing your request.");
+                    $("#loading").hide();
+                }
+            });
+        }
+
+        $(document).ready(function(){
+            $("#loading").hide();
+
+            $('#send').click(function(){
+                sendRequest(base_data);
+            });
+
+            $('#uload').click(function() {
+                $('#fileinput').click();
+            });
+
+            $("#fileinput").change(function(){
+                if (this.files && this.files[0]){
+                    var reader = new FileReader();
+                    reader.onload = function (e){
+                        base_data = e.target.result.split(',')[1]; // Get base64 data
+                        $("#photo").attr("src", e.target.result).show(); // Show preview
+                    }
+                    reader.readAsDataURL(this.files[0]);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

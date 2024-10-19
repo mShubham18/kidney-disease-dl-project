@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='predictdata.css') }}">
+    <title>Kidney Disease Classification Web App</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fbf9fa; /* first-color */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .hero {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #fde1e1; /* second-color */
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px auto;
+            width: 60%;
+            max-width: 1200px;
+        }
+
+        .hero h1 {
+            font-size: 24px;
+            margin: 0;
+            color: black;; /* first-color */
+        }
+
+        .btn {
+            padding: 10px 20px;
+            background-color: #cd0b4c; /* third-color */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 15px;
+            max-width: 150px;
+            text-align: center;
+        }
+
+        .btn:hover {
+            background-color: #a80038; /* fourth-color */
+            color:white;
+        }
+
+        .features {
+            padding: 20px;
+            margin: 20px auto;
+            width: 60%;
+            max-width: 1200px;
+            background-color: #fde1e1;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            flex-grow: 1;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            align-items: start;
+        }
+
+        .features-header {
+            grid-column: span 2;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .features-header h2 {
+            margin-bottom: 10px;
+            font-size: 28px;
+            color: black; /* second-color */
+        }
+
+        .features-header p {
+            font-size: 16px;
+            color: #333;
+        }
+
+        .feature-item {
+            background-color: #fbf9fa; /* first-color */
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #cd0b4c; /* second-color */
+            width: 100%;
+            position: relative;
+            color: white; /* first-color */
+        }
+
+        .model-description {
+            grid-column: span 2;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #000000; /* second-color */
+        }
+
+        .model-item {
+            background-color: #fbf9fa; /* first-color */
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                margin-top: 10px;
+            }
+
+            .features {
+                width: 90%;
+            }
+
+            .features-header {
+                grid-column: span 1;
+            }
+
+            .model-description {
+                grid-column: span 1;
+                margin: 20px 0;
+            }
+
+            .model-item {
+                margin: 10px 0;
+            }
+        }
+        h3{
+            color: #cd0b4c;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="hero">
+        <h1>Welcome to the Kidney Disease Classification Web App</h1>
+        <a href="{{ url_for('service') }}" class="btn">Upload CT Scan</a>
+    </header>
+
+    <section class="features">
+        <div class="features-header">
+            <h2>Features of Our Classification System</h2>
+            <p>Accurate kidney disease detection through advanced machine learning.</p>
+        </div>
+
+        <div class="feature-item">
+            <h3>Instant Diagnosis</h3>
+            <p>Upload your CT scan images and receive instant predictions on the presence of kidney tumors.</p>
+        </div>
+
+        <div class="feature-item">
+            <h3>Advanced Machine Learning</h3>
+            <p>Utilizes the VGG16 model for accurate image classification and analysis.</p>
+        </div>
+
+        <div class="feature-item">
+            <h3>User-Friendly Interface</h3>
+            <p>An intuitive design that allows anyone to upload images and receive results easily.</p>
+        </div>
+
+        <div class="feature-item">
+            <h3>Secure Data Handling</h3>
+            <p>Your data is handled securely and responsibly, ensuring privacy and confidentiality.</p>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="model-description">
+            <h2>About the Technology</h2>
+            <p>Learn more about the technologies powering our classification system.</p>
+        </div>
+
+        <div class="model-item">
+            <h3>VGG16 Model</h3>
+            <p>VGG16 is a deep learning model known for its accuracy in image classification tasks, making it ideal for medical imaging applications.</p>
+        </div>
+
+        <div class="model-item">
+            <h3>TensorFlow</h3>
+            <p>A powerful library for building and training machine learning models, facilitating our prediction process.</p>
+        </div>
+
+        <div class="model-item">
+            <h3>Flask Web Framework</h3>
+            <p>Flask is used to create a lightweight web application, ensuring smooth interaction between the user and the model.</p>
+        </div>
+
+        <div class="model-item">
+            <h3>Azure Cloud Hosting</h3>
+            <p>Our app is hosted on Azure, providing reliable performance and scalability.</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>Kidney Disease Classification Web App. <a href="https://github.com/mShubham18/Kidney-Disease-Classifier-DL" style="color: rgb(209, 196, 196);">Check out the repository</a></p>
+    </footer>
+</body>
+
+</html>
