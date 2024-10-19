@@ -48,10 +48,11 @@ def predictRoute():
         return result  # Directly returning the string "Normal" or "Tumor"
         
     except Exception as e:
+        print(f"Error occurred: {e}")  # This will help in debugging
         return str(e), 500  # Return error message and HTTP 500 status
 
 
 if __name__ == "__main__":
     #app.run(host="0.0.0.0", port=8080, debug=True)  # for LOCALHOST
     # app.run(host="0.0.0.0", port=8080)  # for AWS
-    app.run(host="0.0.0.0", port=80,debug=True)  # for AZURE
+    app.run(host="0.0.0.0", port=80)  # for AZURE
