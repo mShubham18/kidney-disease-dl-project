@@ -65,8 +65,4 @@ Contributions are welcome! If you have suggestions or improvements, please open 
 - [MLflow](https://mlflow.org/)
 - [DVC](https://dvc.org/)
 
-## Contact
-For any inquiries, please contact:
-- **Shubham Mishra**: [GitHub](https://github.com/mShubham18)
-
 Happy Coding ;)
